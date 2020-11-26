@@ -195,21 +195,21 @@ class OpenCVConan(ConanFile):
 
     def _gather_libs(self, p):
         libs = self.deps_cpp_info[p].libs + self.deps_cpp_info[p].system_libs
-        if not getattr(self.options[p],'shared', False):
+        if "shared" not in self.options[p] or not self.options[p].shared:
             for dep in self.deps_cpp_info[p].public_deps:
                 libs += self._gather_libs(dep)
         return libs
 
     def _gather_lib_paths(self, p):
         lib_paths = self.deps_cpp_info[p].lib_paths
-        if not getattr(self.options[p],'shared', False):
+        if "shared" not in self.options[p] or not self.options[p].shared:
             for dep in self.deps_cpp_info[p].public_deps:
                 lib_paths += self._gather_lib_paths(dep)
         return lib_paths
 
     def _gather_include_paths(self, p):
         include_paths = self.deps_cpp_info[p].include_paths
-        if not getattr(self.options[p],'shared', False):
+        if "shared" not in self.options[p] or not self.options[p].shared:
             for dep in self.deps_cpp_info[p].public_deps:
                 include_paths += self._gather_include_paths(dep)
         return include_paths
